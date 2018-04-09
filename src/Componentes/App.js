@@ -25,6 +25,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = { 
+      filtros:[],
       pagocero:[],
       pagos: [] ,
       name:this.props.params.name,
@@ -83,7 +84,6 @@ class App extends React.Component {
             <div className="SplitPane-left col-xs-4 centrar">
               <h4>Conceptos</h4>
               <form action="#"><ConceptoList listado={this.conceptos}/></form>
-              <a className="botonazul waves-effect waves-light btn " onClick={this.filtrarConcepto} href="#">Buscar<i className="large material-icons left">search</i></a>
            </div>
             <div className="SplitPane-center col-xs-4 centrar">
               <FiltroFecha Fechas={this.FiltrarFecha} />
@@ -124,6 +124,7 @@ class App extends React.Component {
   }
  
   FiltrarFecha(Fechas){
+    var filtrado=[];
     console.log(Fechas.del);
     console.log(Fechas.al);
     var del = new String(Fechas.del);
@@ -137,10 +138,18 @@ class App extends React.Component {
         if(pagos.length==0){
           alert("No hay registros de pago en este rango de fechas");
           //this.setState({pagocero: []})
+          filtrado=this.state.pagos;
+          console.log(filtrado);
         }
         else{
-          this.setState({ pagocero: pagos });
+          filtrado=pagos;
+          console.log(filtrado);
+
         }
+
+
+        this.filtrarConcepto(filtrado);
+
         
       })
       .catch(error => {
@@ -149,12 +158,21 @@ class App extends React.Component {
       });
      
   }
-  FiltrarNumeros(listaNumeros){
+  
+  FiltrarNumeros=(listaNumeros)=>{
     console.log("llego lista:")
     console.log(listaNumeros);
+    this.setState({
+      filtros:listaNumeros
+    })
+
+    /* 
+    
     var listaNumeros_seleccionados = listaNumeros;
     var arrayfiltrado=[];
     console.log(listaNumeros_seleccionados);
+
+
     for(let i=0;i<listaNumeros_seleccionados.length;i++){
       var numeroactual=listaNumeros_seleccionados[i];
       for(let j=0;j<this.state.pagos.length;j++){
@@ -165,6 +183,7 @@ class App extends React.Component {
 
       }
     }
+    
     console.log(arrayfiltrado);
    
     if(listaNumeros_seleccionados.length==0){
@@ -182,6 +201,10 @@ class App extends React.Component {
           })
       }
     }
+    
+    
+    
+    */
   }
 
 
@@ -189,8 +212,10 @@ class App extends React.Component {
     // update state with new page of items
     this.setState({ pageOfItems: pageOfItems });
 }
-   filtrarConcepto=(e)=>{
-    e.preventDefault();
+
+
+   filtrarConcepto=(filtrado)=>{
+    console.log(filtrado);
     var idconcepto=[];
     var checkbox_seleccionados=[];
     var check=[];
@@ -209,56 +234,104 @@ class App extends React.Component {
       idconcepto.push(this.conceptos[i].idConcepto);
     }
     
-      /* 
-    }
-    for(let m=0; m<this.conceptos.length;m++){
-      var checkbox=document.getElementsByName(this.conceptos[m].idConcepto);
-      console.log(checkbox.checked);
-    
- }
-    console.log(idconcepto);
-    for(let i=0;i<idconcepto.length;i++){
-      var conceptoactual=idconcepto[i];
-      for(let j=0;j<this.state.pagos.length;j++){
-          var concepto_seleccionado=this.state.pagos[j].concepto.idConcepto;
-          if(concepto_seleccionado===conceptoactual){
-            checkbox_seleccionados.push(concepto_seleccionado);
-          }
-
-      }
-       
-    }*/
     
 
     console.log(checkbox_seleccionados);
-    for(let i=0;i<checkbox_seleccionados.length;i++){
-      var conceptoactual=checkbox_seleccionados[i];
-      for(let j=0;j<this.state.pagos.length;j++){
-          var concepto_seleccionado=this.state.pagos[j].concepto.idConcepto;
-          if(concepto_seleccionado==conceptoactual){
-            arrayfiltrado.push(this.state.pagos[j]);
-          }
-
-      }
-    }
+    
 
 
 
     //var arrayflitrado=this.state.pagos.filter(pago => pago.concepto.idConcepto===5);
    if(checkbox_seleccionados.length==0){
-      this.setState({
-        pagocero:this.state.pagos
-      })
+     
+      arrayfiltrado=filtrado;
     }
     else{
+      for(let i=0;i<checkbox_seleccionados.length;i++){
+        var conceptoactual=checkbox_seleccionados[i];
+        for(let j=0;j<filtrado.length;j++){
+            var concepto_seleccionado=filtrado[j].concepto.idConcepto;
+            if(concepto_seleccionado==conceptoactual){
+              arrayfiltrado.push(filtrado[j]);
+            }
+  
+        }
+      }
+
+      if(arrayfiltrado.length==0){
+        arrayfiltrado=filtrado;
+      }
       console.log(arrayfiltrado);
-      this.setState({
-      pagocero : arrayfiltrado
-      })
+      
+      
 
     }
+
+
+
+   
+
+
+    
+    var numero_codigos=this.state.filtros;
+    console.log(numero_codigos);
+    var filtrofinal=[];
+
+    var listaNumeros_seleccionados = numero_codigos;
+    
+    console.log(listaNumeros_seleccionados);
+
+
     
     
+    console.log(arrayfiltrado);
+   
+    if(listaNumeros_seleccionados.length==0){
+      alert("Ingrese uno o mas numeros de recibos")
+      this.setState({
+        pagocero: arrayfiltrado
+      })
+      
+      
+    }
+    else{ 
+      if(arrayfiltrado.length == 0){
+        alert("No hay registro con los numeros de voucher ingresados");
+        this.setState({
+          pagocero: arrayfiltrado
+        })
+      }
+      else{
+
+        for(let i=0;i<listaNumeros_seleccionados.length;i++){
+          var numeroactual=listaNumeros_seleccionados[i];
+          for(let j=0;j<arrayfiltrado.length;j++){
+              var numero_seleccionado=arrayfiltrado[j].numero;
+              if(numero_seleccionado==numeroactual){
+                filtrofinal.push(arrayfiltrado[j]);
+              }
+    
+          }
+        }
+
+        if(filtrofinal.length==0){
+          this.setState({
+            pagocero:arrayfiltrado
+          })
+        }else{
+          this.setState({
+            pagocero:filtrofinal
+          })
+        }
+
+
+        console.log(arrayfiltrado);
+        
+      }
+    }
+    
+
+
   }
 
 

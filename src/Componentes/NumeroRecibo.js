@@ -27,6 +27,7 @@ class NumeroRecibo extends React.Component {
             listaNumeros: listaAgregados
           })
         e.preventDefault();
+        this.Buscar(e);
         
     }
     Buscar=(e)=>{
@@ -54,9 +55,9 @@ class NumeroRecibo extends React.Component {
               <div className="center">
               <NumeroList listado={this.state.listaNumeros}/>
               </div>
-              <div className="center ">
+             {/*  <div className="center ">
                 <button  onClick={this.Buscar} className="waves-effect waves-light btn botonazul2 " >Buscar<i className="large material-icons left">search</i></button>
-              </div>
+              </div> */}
               
             </div>
           </div>
