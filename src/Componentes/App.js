@@ -104,7 +104,7 @@ class App extends React.Component {
               <NumeroRecibo Numeros={this.FiltrarNumeros}/>
             </div>
             </div>
-            <div className="  sin_margen  center-xs-10">
+            <div className=" sin_margen  center-xs-9">
               <table className=" total table centrar">
                 <TableHeader/>
                <PagoList listado={this.state.pageOfItems} />
