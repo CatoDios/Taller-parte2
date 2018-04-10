@@ -11,7 +11,12 @@ class FiltroFecha extends React.Component {
     }  
      render() {
         return(
-          <form className="margen" onSubmit={(e) => this.addNewFiltro(e)}>
+          <div className="row center-xs margen_der">
+          
+          <form className="margen_izq" onSubmit={(e) => this.addNewFiltro(e)}>
+          
+           <button  className="waves-effect waves-light btn-large botonazul2 center"type="submit">Buscar<i className="large material-icons left">search</i></button>
+           <h4 className=" centrar margen_top ">Fechas</h4>
           <div className = "SplitPane">
            <div >
             <label>Del:</label>
@@ -21,12 +26,12 @@ class FiltroFecha extends React.Component {
            </div>
            <div >
             <div>
-            <button  className="waves-effect waves-light btn botonazul2 "type="submit">Buscar<i className="large material-icons left">search</i></button>
+           
             </div>
            </div>
           </div>
           </form>
-        
+        </div>
         )
       }
     

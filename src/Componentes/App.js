@@ -81,25 +81,38 @@ class App extends React.Component {
           <Alumno alumno = {this.state.pagos[0].alumno}/>
           <hr/>
           <div className="SplitPane row">
-            <div className="SplitPane-left col-xs-4 centrar">
-              <h4>Conceptos</h4>
-              <form action="#"><ConceptoList listado={this.conceptos}/></form>
-           </div>
-            <div className="SplitPane-center col-xs-4 centrar">
+
+          <div className="margen col-xs-3 plomo margen_bottom">
+
+            
+            <div className="margen_top">
+            
               <FiltroFecha Fechas={this.FiltrarFecha} />
             </div >
-            <div className="SplitPane-right col-xs-4 centrar">
+            
+            
+            <div className="row center-xs block">
+              <h4 className=" centrar margen_top espacio">Conceptos</h4>
+              <div className="scroll center-xs ">
+              
+              <form action="#"><ConceptoList listado={this.conceptos}/></form>
+              </div>
+
+           </div>
+            <div className="centrar">
+            <h4 className=" centrar margen_top">Recibo</h4>
               <NumeroRecibo Numeros={this.FiltrarNumeros}/>
             </div>
-          </div>
-          <div className="total row center-xs">
-          <table className="table centrar">
-            <TableHeader/>
-            <PagoList listado={this.state.pageOfItems} />
-          </table>
-          </div>
-          <div> <Paginacion items={this.state.pagocero} onChangePage={this.onChangePage} /></div>
-          <div className="SplitPane">
+            </div>
+            <div className="  sin_margen  center-xs-10">
+              <table className=" total table centrar">
+                <TableHeader/>
+               <PagoList listado={this.state.pageOfItems} />
+            </table>
+            <div className="margen_top"> <Paginacion items={this.state.pagocero} onChangePage={this.onChangePage} /></div>
+
+
+          <div className="SplitPane margen_top">
             <div className="SplitPane-right">
             <Importe importe={this.CalcularImporte()} />
             </div>
@@ -107,6 +120,13 @@ class App extends React.Component {
             <button className=" waves-effect waves-light btn imprimir ">Imprimir<i className="large material-icons left">local_printshop</i></button>
             </div>
           </div>  
+
+            </div>
+
+          
+          </div>
+          
+         
 
         </div>
       )
